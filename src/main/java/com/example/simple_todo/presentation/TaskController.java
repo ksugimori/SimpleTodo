@@ -1,8 +1,10 @@
-package com.example.simple_todo.controller;
+package com.example.simple_todo.presentation;
 
 import com.example.simple_todo.domain.Task;
 import com.example.simple_todo.domain.TaskId;
 import com.example.simple_todo.domain.TaskRepository;
+import com.example.simple_todo.presentation.form.TaskCompleteForm;
+import com.example.simple_todo.presentation.form.TaskCreateForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +26,13 @@ public class TaskController {
 
     @GetMapping
     public String index(Model model) {
-        refreshModels(model);
+        List<Task> tasks = taskRepository.findAll()
+                .stream()
+                .sorted(Comparator.comparing(Task::id))
+                .toList();
+
+        model.addAttribute("tasks", tasks);
+
         return "tasks";
     }
 
@@ -35,17 +43,17 @@ public class TaskController {
 
         taskRepository.save(task);
 
-        refreshModels(model);
-        return "tasks";
+        return "redirect:/tasks";
     }
 
-    private void refreshModels(Model model) {
-        List<Task> tasks = taskRepository.findAll()
-                .stream()
-                .sorted(Comparator.comparing(Task::id))
-                .toList();
+    @PostMapping("/complete")
+    public String complete(@ModelAttribute TaskCompleteForm form, Model model) {
+        TaskId id = new TaskId(form.getTaskId());
 
-        model.addAttribute("createForm", new TaskCreateForm());
-        model.addAttribute("tasks", tasks);
+        Task task = taskRepository.findById(id);
+        taskRepository.save(task.complete());
+
+        return "redirect:/tasks";
     }
+
 }
