@@ -14,7 +14,7 @@
     <section>
         <h2>新規登録</h2>
 
-        <form method="post" th:action="@{/api/tasks}" class="inline">
+        <form id="createTaskForm">
             <input name="subject" type="text" required/>
             <button type="submit">登録</button>
         </form>

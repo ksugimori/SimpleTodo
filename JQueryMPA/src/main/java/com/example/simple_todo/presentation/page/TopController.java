@@ -1,4 +1,4 @@
-package com.example.simple_todo.presentation;
+package com.example.simple_todo.presentation.page;
 
 import com.example.simple_todo.domain.Task;
 import com.example.simple_todo.domain.TaskRepository;
