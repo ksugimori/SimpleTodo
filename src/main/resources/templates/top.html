@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <title>Simple TODO</title>
+    <link rel="stylesheet" href="css/sakura.css" type="text/css">
+    <link rel="stylesheet" href="css/sakura-custom.css">
+</head>
+<body>
+<main>
+    <h1>Simple TODO</h1>
+
+    <section>
+        <form>
+            <input name="content" type="text" required/>
+            <button type="submit">追加</button>
+        </form>
+    </section>
+
+    <h2>一覧</h2>
+
+    <section>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>内容</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1</td>
+                <td>牛乳を買う</td>
+                <td>
+                    <form>
+                        <button type="button">完了</button>
+                    </form>
+                    <form>
+                        <button type="button">削除</button>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>掃除する</td>
+                <td>完了済(2024/01/01 12:00)</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+</body>
+</html>
