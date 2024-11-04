@@ -39,7 +39,8 @@
                             <input name="taskId" type="hidden" th:value="*{id}">
                             <button type="submit">完了</button>
                         </form>
-                        <form>
+                        <form th:action="@{/tasks/delete}" method="post">
+                            <input name="taskId" type="hidden" th:value="*{id}">
                             <button type="submit">削除</button>
                         </form>
                     </th:block>
