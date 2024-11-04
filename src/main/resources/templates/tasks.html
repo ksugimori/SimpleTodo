@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="ja" xmlns:th="https://www.thymeleaf.org">
 <head>
     <title>Simple TODO</title>
     <link rel="stylesheet" href="css/sakura.css" type="text/css">
@@ -10,8 +10,8 @@
     <h1>Simple TODO</h1>
 
     <section>
-        <form>
-            <input name="content" type="text" required/>
+        <form method="post" th:action="@{/tasks}" th:object="${createForm}">
+            <input th:field="*{subject}" type="text" required/>
             <button type="submit">追加</button>
         </form>
     </section>
@@ -28,6 +28,18 @@
             </tr>
             </thead>
             <tbody>
+            <tr th:each="task : ${tasks}" th:object="${task}">
+                <td th:text="*{id}"></td>
+                <td th:text="*{subject}"></td>
+                <td>
+                    <form>
+                        <button type="button">完了</button>
+                    </form>
+                    <form>
+                        <button type="button">削除</button>
+                    </form>
+                </td>
+            </tr>
             <tr>
                 <td>1</td>
                 <td>牛乳を買う</td>
