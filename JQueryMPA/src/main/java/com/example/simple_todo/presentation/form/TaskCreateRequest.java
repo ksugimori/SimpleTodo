@@ -1,6 +1,6 @@
 package com.example.simple_todo.presentation.form;
 
-public class TaskCreateForm {
+public class TaskCreateRequest {
     private String subject;
 
     public String getSubject() {
