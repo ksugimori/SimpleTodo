@@ -10,9 +10,11 @@
     <h1>Simple TODO</h1>
 
     <section>
-        <form method="post" th:action="@{/tasks}" th:object="${createForm}">
-            <input th:field="*{subject}" type="text" required/>
-            <button type="submit">追加</button>
+        <h2>新規登録</h2>
+
+        <form method="post" th:action="@{/tasks}" class="inline">
+            <input name="subject" type="text" required/>
+            <button type="submit">登録</button>
         </form>
     </section>
 
@@ -32,30 +34,19 @@
                 <td th:text="*{id}"></td>
                 <td th:text="*{subject}"></td>
                 <td>
-                    <form>
-                        <button type="button">完了</button>
-                    </form>
-                    <form>
-                        <button type="button">削除</button>
-                    </form>
+                    <th:block th:if="not *{isCompleted}">
+                        <form th:action="@{/tasks/complete}" method="post">
+                            <input name="taskId" type="hidden" th:value="*{id}">
+                            <button type="submit">完了</button>
+                        </form>
+                        <form>
+                            <button type="submit">削除</button>
+                        </form>
+                    </th:block>
+                    <th:block th:if="*{isCompleted}">
+                        完了済み
+                    </th:block>
                 </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>牛乳を買う</td>
-                <td>
-                    <form>
-                        <button type="button">完了</button>
-                    </form>
-                    <form>
-                        <button type="button">削除</button>
-                    </form>
-                </td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>掃除する</td>
-                <td>完了済(2024/01/01 12:00)</td>
             </tr>
             </tbody>
         </table>

@@ -1,4 +1,4 @@
-package com.example.simple_todo.controller;
+package com.example.simple_todo.presentation.form;
 
 public class TaskCreateForm {
     private String subject;

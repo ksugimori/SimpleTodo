@@ -33,4 +33,9 @@ public class TaskRepositoryImpl implements TaskRepository {
     public Collection<Task> findAll() {
         return this.map.values();
     }
+
+    @Override
+    public Task findById(TaskId id) {
+        return this.map.get(id);
+    }
 }

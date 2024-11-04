@@ -8,4 +8,6 @@ public interface TaskRepository {
     void save(Task task);
 
     Collection<Task> findAll();
+
+    Task findById(TaskId id);
 }
