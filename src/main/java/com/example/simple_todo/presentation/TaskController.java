@@ -3,8 +3,8 @@ package com.example.simple_todo.presentation;
 import com.example.simple_todo.domain.Task;
 import com.example.simple_todo.domain.TaskId;
 import com.example.simple_todo.domain.TaskRepository;
-import com.example.simple_todo.presentation.form.TaskCompleteForm;
 import com.example.simple_todo.presentation.form.TaskCreateForm;
+import com.example.simple_todo.presentation.form.TaskIdForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,11 +47,20 @@ public class TaskController {
     }
 
     @PostMapping("/complete")
-    public String complete(@ModelAttribute TaskCompleteForm form, Model model) {
+    public String complete(@ModelAttribute TaskIdForm form, Model model) {
         TaskId id = new TaskId(form.getTaskId());
 
         Task task = taskRepository.findById(id);
         taskRepository.save(task.complete());
+
+        return "redirect:/tasks";
+    }
+
+    @PostMapping("/delete")
+    public String delete(@ModelAttribute TaskIdForm form, Model model) {
+        TaskId id = new TaskId(form.getTaskId());
+
+        taskRepository.deleteById(id);
 
         return "redirect:/tasks";
     }

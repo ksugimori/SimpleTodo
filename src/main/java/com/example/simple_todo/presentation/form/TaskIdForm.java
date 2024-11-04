@@ -1,6 +1,6 @@
 package com.example.simple_todo.presentation.form;
 
-public class TaskCompleteForm {
+public class TaskIdForm {
     private Long taskId;
 
     public Long getTaskId() {

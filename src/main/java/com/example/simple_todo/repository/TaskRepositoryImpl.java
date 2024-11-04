@@ -38,4 +38,9 @@ public class TaskRepositoryImpl implements TaskRepository {
     public Task findById(TaskId id) {
         return this.map.get(id);
     }
+
+    @Override
+    public boolean deleteById(TaskId id) {
+        return this.map.remove(id) != null;
+    }
 }

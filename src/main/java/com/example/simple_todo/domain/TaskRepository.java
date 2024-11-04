@@ -10,4 +10,6 @@ public interface TaskRepository {
     Collection<Task> findAll();
 
     Task findById(TaskId id);
+
+    boolean deleteById(TaskId id);
 }
