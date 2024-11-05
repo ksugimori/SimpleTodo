@@ -15,6 +15,7 @@ function deleteTask(taskId) {
 }
 
 function refreshTable() {
+    $('#create_task_form input').val('');
     const $tbody = $('#task_table tbody').empty();
 
     $.get('/api/tasks', function(tasks) {
@@ -42,21 +43,23 @@ function refreshTable() {
     });
 }
 
+function createTask(e) {
+    e.preventDefault();
+
+    const request = {
+        subject: $(this).children('input[name="subject"]').val(),
+        isCompleted: false
+    };
+
+    $.ajax('/api/tasks', {
+        type: 'POST',
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify(request)
+    }).done(refreshTable);
+}
+
 $(function() {
-    $('#create_task_form').submit(function(e) {
-        e.preventDefault();
-
-        const request = {
-            subject: $(this).children('input[name="subject"]').val(),
-            isCompleted: false
-        };
-
-        $.ajax('/api/tasks', {
-            type: 'POST',
-            contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify(request)
-        }).done(refreshTable);
-    });
+    $('#create_task_form').submit(createTask);
 
     refreshTable();
 });
