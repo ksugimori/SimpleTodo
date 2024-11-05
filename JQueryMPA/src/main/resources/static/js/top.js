@@ -57,4 +57,6 @@ $(function() {
             data: JSON.stringify(request)
         }).done(refreshTable);
     });
+
+    refreshTable();
 });
