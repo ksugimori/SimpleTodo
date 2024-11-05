@@ -32,25 +32,6 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="task : ${tasks}" th:object="${task}">
-                <td th:text="*{id}"></td>
-                <td th:text="*{subject}"></td>
-                <td>
-                    <th:block th:if="not *{isCompleted}">
-                        <form th:action="@{/tasks/complete}" method="post">
-                            <input name="taskId" type="hidden" th:value="*{id}">
-                            <button type="submit">完了</button>
-                        </form>
-                        <form th:action="@{/tasks/delete}" method="post">
-                            <input name="taskId" type="hidden" th:value="*{id}">
-                            <button type="submit">削除</button>
-                        </form>
-                    </th:block>
-                    <th:block th:if="*{isCompleted}">
-                        完了済み
-                    </th:block>
-                </td>
-            </tr>
             </tbody>
         </table>
     </section>
