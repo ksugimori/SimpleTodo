@@ -15,7 +15,6 @@ function deleteTask(taskId) {
 }
 
 function refreshTable() {
-    $('#create_task_form input').val('');
     const $tbody = $('#task_table tbody').empty();
 
     $.get('/api/tasks', function(tasks) {
@@ -46,8 +45,11 @@ function refreshTable() {
 function createTask(e) {
     e.preventDefault();
 
+    const form = e.target;
+    const formData = new FormData(e.target);
+
     const request = {
-        subject: $(this).children('input[name="subject"]').val(),
+        subject: formData.get('subject'),
         isCompleted: false
     };
 
@@ -55,7 +57,7 @@ function createTask(e) {
         type: 'POST',
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(request)
-    }).done(refreshTable);
+    }).done(() => form.reset()).done(refreshTable);
 }
 
 $(function() {
