@@ -2,9 +2,11 @@
     width: 100%;
 }
 
-#task_table thead th:nth-child(1),
-#task_table thead th:nth-child(3) {
+#task_table thead th:nth-child(1) {
     width: 10rem;
+}
+#task_table thead th:nth-child(3) {
+    width: 11rem;
 }
 
 #task_table tbody tr:hover {
