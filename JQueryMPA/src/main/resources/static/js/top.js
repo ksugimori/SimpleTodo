@@ -1,5 +1,5 @@
-function completeTask(taskId) {
-    const task = $('#task_table').data('tasks').find(t => t.id == taskId);
+function completeTask(e) {
+    const task = $(e.target).closest('tr').data('task');
 
     task.isCompleted = true;
 
@@ -7,49 +7,62 @@ function completeTask(taskId) {
         type: 'PUT',
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(task)
-    }).done(refreshTable);
+    }).done(response => {
+        const $buttonCell = $(`#task_table tbody tr[data-task-id="${response.id}"] td:nth-child(3)`);
+        if (response.isCompleted) {
+            $buttonCell.text('完了済み');
+        } else {
+            $buttonCell.append(
+                $(`<button type="button" onClick="completeTask(event)">完了</button>`)
+            ).append(
+                $(`<button type="button" onClick="deleteTask(${response.id})">削除</button>`)
+            );
+        }
+    });
 }
 
 function deleteTask(taskId) {
-     $.ajax('/api/tasks/' + taskId, { type: 'DELETE' }).done(refreshTable);
+    $.ajax(`/api/tasks/${taskId}`, { type: 'DELETE' }).done(() => {
+        $(`#task_table tbody tr[data-task-id="${taskId}"]`).remove();
+    });
 }
 
-function refreshTable() {
-    const $tbody = $('#task_table tbody').empty();
+function loadTasks() {
+    const $tbody = $('#task_table tbody');
 
-    $.get('/api/tasks', function(tasks) {
-        $('#task_table').data('tasks', tasks);
-
+    $.get(`/api/tasks`).done(tasks => {
         for (let task of tasks) {
-            let $buttonCell = $('<td></td>')
-            if (task.isCompleted) {
-                $buttonCell.text('完了済み');
-            } else {
-                $buttonCell.append(
-                    $(`<button type="button" onClick="completeTask(${task.id})">完了</button>`)
-                ).append(
-                    $(`<button type="button" onClick="deleteTask(${task.id})">削除</button>`)
-                );
-            }
-
-            const $tr = $(`<tr></tr>`)
-                .append(`<td>${task.id}</td>`)
-                .append(`<td>${task.subject}</td>`)
-                .append($buttonCell);
-
+            const $tr = createRow(task).data('task', task);
             $tbody.append($tr);
         }
     });
+}
+
+function createRow(task) {
+    let $buttonCell = $('<td></td>')
+    if (task.isCompleted) {
+        $buttonCell.text('完了済み');
+    } else {
+        $buttonCell.append(
+            $(`<button type="button" onClick="completeTask(event)">完了</button>`)
+        ).append(
+            $(`<button type="button" onClick="deleteTask(${task.id})">削除</button>`)
+        );
+    }
+
+    return $(`<tr data-task-id="${task.id}"></tr>`)
+        .append(`<td>${task.id}</td>`)
+        .append(`<td>${task.subject}</td>`)
+        .append($buttonCell);
 }
 
 function createTask(e) {
     e.preventDefault();
 
     const form = e.target;
-    const formData = new FormData(e.target);
 
     const request = {
-        subject: formData.get('subject'),
+        subject: new FormData(form).get('subject'),
         isCompleted: false
     };
 
@@ -57,11 +70,14 @@ function createTask(e) {
         type: 'POST',
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(request)
-    }).done(() => form.reset()).done(refreshTable);
+    }).done(() => form.reset()).done(response => {
+        const $tr = createRow(response).data('task', response);
+        $('#task_table tbody').append($tr);
+    });
 }
 
 $(function() {
     $('#create_task_form').submit(createTask);
 
-    refreshTable();
+    loadTasks();
 });
