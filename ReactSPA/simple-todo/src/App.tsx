@@ -1,4 +1,5 @@
 import './App.css'
+import TaskTable from './components/tasktable/TaskTable'
 import Task from './types/Task'
 
 const tasks: Task[] = [
@@ -17,29 +18,7 @@ function App() {
       </form>
 
       <h2>一覧</h2>
-      <table id="task_table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>内容</th>
-            <th></th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {tasks.map(task => (<tr>
-            <td>{task.id}</td>
-            <td>{task.subject}</td>
-            <td>{task.isCompleted
-              ? '完了済み'
-              : (<>
-                <button type="button">完了</button>
-                <button type='button'>削除</button>
-              </>)
-            }</td>
-          </tr>))}
-        </tbody>
-      </table>
+      <TaskTable tasks={tasks} />
 
     </main>
   )
