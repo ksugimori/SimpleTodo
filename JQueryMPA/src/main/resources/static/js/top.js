@@ -3,11 +3,12 @@
 /////////////////////////////////////////////////////////////////////////////
 
 function createRow(task) {
-    const $tr = $(`<tr data-task-id="${task.id}"></tr>`)
-        .append(`<td>${task.id}</td>`)
-        .append(`<td>${task.subject}</td>`)
-        .append('<td></td>')
-        .data('task', task);
+    const $tr = $(`<tr data-task-id="${task.id}">
+                       <td>${task.id}</td>
+                       <td>${task.subject}</td>
+                       <td></td>
+                   </tr>`);
+    $tr.data('task', task);
 
     updateButtonColumn($tr);
 
@@ -25,9 +26,8 @@ function updateButtonColumn($tr) {
         $buttonCell.text('完了済み');
     } else {
         $buttonCell.append(
-            $(`<button type="button" onClick="completeTask(event)">完了</button>`)
-        ).append(
-            $(`<button type="button" onClick="deleteTask(${task.id})">削除</button>`)
+            `<button type="button" onClick="completeTask(event)">完了</button>
+            <button type="button" onClick="deleteTask(${task.id})">削除</button>`
         );
     }
 }
