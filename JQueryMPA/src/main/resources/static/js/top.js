@@ -46,12 +46,14 @@ function completeTask(e) {
         data: JSON.stringify(task)
     })
     .then(response => findRow(response.id))
-    .done($tr => updateButtonColumn($tr));
+    .then($tr => updateButtonColumn($tr))
+    .catch(e => alert('エラーが発生しました'));
 }
 
 function deleteTask(taskId) {
     $.ajax(`/api/tasks/${taskId}`, { type: 'DELETE' })
-        .done(() => findRow(taskId).remove());
+        .then(() => findRow(taskId).remove())
+        .catch(e => alert('エラーが発生しました'));
 }
 
 function createTask(e) {
@@ -71,7 +73,8 @@ function createTask(e) {
     })
     .then(response => createRow(response))
     .then($tr => $('#task_table tbody').append($tr))
-    .done(() => form.reset());
+    .then(() => form.reset())
+    .catch(e => alert('エラーが発生しました'));
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -82,5 +85,6 @@ $(function() {
 
     $.get('/api/tasks')
         .then(response => response.map(createRow))
-        .done($rows => $('#task_table tbody').append($rows));
+        .then($rows => $('#task_table tbody').append($rows))
+        .catch(e => alert('エラーが発生しました'));
 });
