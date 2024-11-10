@@ -11,6 +11,7 @@ import java.net.URI;
 import java.util.Comparator;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/tasks")
 public class TaskController {

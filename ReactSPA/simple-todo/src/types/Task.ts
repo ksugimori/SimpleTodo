@@ -1,26 +1,19 @@
 type TaskId = number;
 
-class Task {
-  private static sequence: TaskId = 1;
-
+interface Task {
   readonly id: TaskId;
-  readonly subject: string;
+  subject: string;
   readonly isCompleted: boolean;
+}
 
-  complete(): Task {
-    return new Task(this.id, this.subject, true);
-  }
-
-  private constructor(id: TaskId, subject: string, isCompleted: boolean) {
-    this.id = id;
-    this.subject = subject;
-    this.isCompleted = isCompleted;
-  }
-
-  public static create(subject: string): Task {
-    return new Task(Task.sequence++, subject, false);
+function completeTask(task: Task): Task {
+  return {
+    id: task.id,
+    subject: task.subject,
+    isCompleted: true
   }
 }
 
 export type { TaskId, Task };
+export { completeTask };
 export default Task;

@@ -3,7 +3,7 @@ import TaskTableRow from "./TaskTableRow";
 
 type Props = {
   tasks: Task[];
-  onComplete: (id: TaskId) => void;
+  onComplete: (task: Task) => void;
   onDelete: (id: TaskId) => void;
 }
 
