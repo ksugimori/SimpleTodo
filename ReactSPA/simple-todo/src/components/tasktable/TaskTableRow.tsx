@@ -1,15 +1,15 @@
-import Task from "../../types/Task"
+import Task, { TaskId } from "../../types/Task"
 
 type Props = {
   task: Task;
-  onComplete: (task: Task) => void;
-  onDelete: (task: Task) => void;
+  onComplete: (id: TaskId) => void;
+  onDelete: (id: TaskId) => void;
 };
 
 function TaskTableRow({ task, onComplete, onDelete }: Props) {
   const buttons = <>
-    <button type='button' onClick={() => onComplete(task)}>完了</button>
-    <button type='button' onClick={() => onDelete(task)}>削除</button>
+    <button type='button' onClick={() => onComplete(task.id)}>完了</button>
+    <button type='button' onClick={() => onDelete(task.id)}>削除</button>
   </>
 
   return <tr>

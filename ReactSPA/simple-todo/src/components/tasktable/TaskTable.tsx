@@ -1,11 +1,13 @@
-import Task from "../../types/Task"
+import Task, { TaskId } from "../../types/Task"
 import TaskTableRow from "./TaskTableRow";
 
 type Props = {
-  tasks: Task[]
+  tasks: Task[];
+  onComplete: (id: TaskId) => void;
+  onDelete: (id: TaskId) => void;
 }
 
-function TaskTable({ tasks }: Props) {
+function TaskTable({ tasks, onComplete, onDelete }: Props) {
   return <table id="task_table">
     <thead>
       <tr>
@@ -17,9 +19,10 @@ function TaskTable({ tasks }: Props) {
 
     <tbody>
       {tasks.map(task => <TaskTableRow
+        key={task.id}
         task={task}
-        onComplete={(t) => alert("完了しました: " + t.id)}
-        onDelete={(t) => alert("削除しました: " + t.id)}
+        onComplete={onComplete}
+        onDelete={onDelete}
       />)}
     </tbody>
   </table>
