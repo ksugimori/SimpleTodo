@@ -3,10 +3,11 @@ import './App.css'
 import TaskTable from './components/tasktable/TaskTable'
 import Task, { completeTask } from './types/Task'
 import TaskInputForm from './components/taskInputForm/TaskInputForm'
+import TaskApiClient from './service/TaskApiClient'
 
-const initialState: Task[] = await fetch('http://localhost:8080/api/tasks')
-  .then(response => response.json())
-  ?? []
+const taskApiClient = new TaskApiClient('localhost', 8080);
+
+const initialState: Task[] = await taskApiClient.findAll();
 
 function App() {
   const [tasks, setTasks] = useState(initialState);
@@ -17,20 +18,13 @@ function App() {
 
       <h2>新規登録</h2>
       <TaskInputForm onSubmit={async subject => {
-        const createdTask: Task = await fetch('http://localhost:8080/api/tasks', {
-          method: "POST",
-          body: JSON.stringify({
-            id: null,
-            subject: subject,
-            isCompleted: false
-          }),
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }).then(response => response.json());
-
-        const result = [...tasks, createdTask];
-        setTasks(result);
+        await taskApiClient.create({
+          subject: subject,
+          isCompleted: false
+        }).then(createdTask => {
+          const result = [...tasks, createdTask];
+          setTasks(result);
+        });
       }} />
 
       <h2>一覧</h2>
@@ -38,23 +32,13 @@ function App() {
         tasks={tasks}
         onComplete={async task => {
           const request = completeTask(task)
-          await fetch(`http://localhost:8080/api/tasks/${task.id}`, {
-            method: "PUT",
-            body: JSON.stringify(request),
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          }).catch(() => {
-            alert('削除に失敗しました');
-          });
-
-          const result = tasks.map(e => (e.id === request.id ? request : e))
-          setTasks(result);
+          await taskApiClient.update(request).then(updatedTask => {
+            const result = tasks.map(e => (e.id === updatedTask.id ? updatedTask : e))
+            setTasks(result);
+          }).catch(() => alert('更新に失敗しました'));
         }}
         onDelete={async id => {
-          await fetch(`http://localhost:8080/api/tasks/${id}`, {
-            method: "DELETE",
-          }).then(() => {
+          await taskApiClient.delete(id).then(() => {
             const result = tasks.filter(task => task.id !== id);
             setTasks(result);
           }).catch(() => {
