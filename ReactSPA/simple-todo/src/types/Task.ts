@@ -2,14 +2,14 @@ type TaskId = number;
 
 interface Task {
   readonly id: TaskId;
-  subject: string;
+  description: string;
   readonly isCompleted: boolean;
 }
 
 function completeTask(task: Task): Task {
   return {
     id: task.id,
-    subject: task.subject,
+    description: task.description,
     isCompleted: true
   }
 }

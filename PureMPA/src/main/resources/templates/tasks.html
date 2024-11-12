@@ -13,7 +13,7 @@
         <h2>新規登録</h2>
 
         <form method="post" th:action="@{/tasks}" class="inline">
-            <input name="subject" type="text" required/>
+            <input name="description" type="text" required/>
             <button type="submit">登録</button>
         </form>
     </section>
@@ -32,7 +32,7 @@
             <tbody>
             <tr th:each="task : ${tasks}" th:object="${task}">
                 <td th:text="*{id}"></td>
-                <td th:text="*{subject}"></td>
+                <td th:text="*{description}"></td>
                 <td>
                     <th:block th:if="not *{isCompleted}">
                         <form th:action="@{/tasks/complete}" method="post">

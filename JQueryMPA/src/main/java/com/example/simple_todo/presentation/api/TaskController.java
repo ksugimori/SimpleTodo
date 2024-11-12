@@ -33,7 +33,7 @@ public class TaskController {
     public ResponseEntity<Task> create(@RequestBody Task request) {
         Task task = new Task(
                 taskRepository.nextId(),
-                request.subject(),
+                request.description(),
                 request.isCompleted()
         );
 

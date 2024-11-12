@@ -14,7 +14,7 @@ function TaskTableRow({ task, onComplete, onDelete }: Props) {
 
   return <tr>
     <td>{task.id}</td>
-    <td>{task.subject}</td>
+    <td>{task.description}</td>
     <td>{task.isCompleted ? '完了済み' : buttons}</td>
   </tr>
 }

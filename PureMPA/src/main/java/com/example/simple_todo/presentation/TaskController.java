@@ -39,7 +39,7 @@ public class TaskController {
     @PostMapping
     public String create(@ModelAttribute TaskCreateForm form, Model model) {
         TaskId id = taskRepository.nextId();
-        Task task = new Task(id, form.getSubject());
+        Task task = new Task(id, form.getDescription());
 
         taskRepository.save(task);
 

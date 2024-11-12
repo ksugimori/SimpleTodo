@@ -5,7 +5,7 @@
 function createRow(task) {
     const $tr = $(`<tr data-task-id="${task.id}">
                        <td>${task.id}</td>
-                       <td>${task.subject}</td>
+                       <td>${task.description}</td>
                        <td></td>
                    </tr>`);
     $tr.data('task', task);
@@ -62,7 +62,7 @@ function createTask(e) {
     const form = e.target;
 
     const request = {
-        subject: new FormData(form).get('subject'),
+        description: new FormData(form).get('description'),
         isCompleted: false
     };
 
