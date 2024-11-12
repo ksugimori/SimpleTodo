@@ -1,7 +1,7 @@
 import Task, { TaskId } from "../types/Task";
 
 type TaskCreateRequest = {
-  subject: string;
+  description: string;
   isCompleted: boolean;
 }
 
@@ -25,7 +25,7 @@ class TaskApiClient {
       method: 'POST',
       body: JSON.stringify({
         id: null, // 新規登録なので ID は null 固定
-        subject: task.subject,
+        description: task.description,
         isCompleted: task.isCompleted
       }),
       headers: {

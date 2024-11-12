@@ -1,13 +1,13 @@
 package com.example.simple_todo.domain;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface TaskRepository {
     TaskId nextId();
 
     void save(Task task);
 
-    Collection<Task> findAll();
+    List<Task> findAll();
 
     Task findById(TaskId id);
 

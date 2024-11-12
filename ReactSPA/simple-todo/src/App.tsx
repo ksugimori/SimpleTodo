@@ -17,9 +17,9 @@ function App() {
       <h1>Simple TODO</h1>
 
       <h2>新規登録</h2>
-      <TaskInputForm onSubmit={async subject => {
+      <TaskInputForm onSubmit={async description => {
         await taskApiClient.create({
-          subject: subject,
+          description: description,
           isCompleted: false
         }).then(createdTask => {
           const result = [...tasks, createdTask];

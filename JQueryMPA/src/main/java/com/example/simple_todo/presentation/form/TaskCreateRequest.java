@@ -1,13 +1,13 @@
 package com.example.simple_todo.presentation.form;
 
 public class TaskCreateRequest {
-    private String subject;
+    private String description;
 
-    public String getSubject() {
-        return subject;
+    public String getDescription() {
+        return description;
     }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

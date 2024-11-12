@@ -5,8 +5,9 @@ import com.example.simple_todo.domain.TaskId;
 import com.example.simple_todo.domain.TaskRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -30,8 +31,8 @@ public class TaskRepositoryImpl implements TaskRepository {
     }
 
     @Override
-    public Collection<Task> findAll() {
-        return this.map.values();
+    public List<Task> findAll() {
+        return new ArrayList<>(this.map.values());
     }
 
     @Override
