@@ -18,13 +18,13 @@ function App() {
 
       <h2>新規登録</h2>
       <TaskInputForm onSubmit={async description => {
-        await taskApiClient.create({
+        const createdTask = await taskApiClient.create({
           description: description,
           isCompleted: false
-        }).then(createdTask => {
-          const result = [...tasks, createdTask];
-          setTasks(result);
         });
+
+        const result = [...tasks, createdTask];
+        setTasks(result);
       }} />
 
       <h2>一覧</h2>
@@ -32,18 +32,25 @@ function App() {
         tasks={tasks}
         onComplete={async task => {
           const request = completeTask(task)
-          await taskApiClient.update(request).then(updatedTask => {
+
+          try {
+            const updatedTask = await taskApiClient.update(request);
+
             const result = tasks.map(e => (e.id === updatedTask.id ? updatedTask : e))
             setTasks(result);
-          }).catch(() => alert('更新に失敗しました'));
+          } catch {
+            alert('更新に失敗しました');
+          }
         }}
         onDelete={async id => {
-          await taskApiClient.delete(id).then(() => {
+          try {
+            await taskApiClient.delete(id);
+
             const result = tasks.filter(task => task.id !== id);
             setTasks(result);
-          }).catch(() => {
+          } catch {
             alert('削除に失敗しました');
-          });
+          }
         }}
       />
 
