@@ -13,6 +13,14 @@ public record TaskId(@JsonValue Long value) implements Comparable<TaskId> {
         return this.value.toString();
     }
 
+    /**
+     * 文字列からタスクIDを作成する。
+     * <p>
+     * {@link org.springframework.web.bind.annotation.PathVariable} でのマッピングに利用される。
+     *
+     * @param stringValue タスクIDの文字列表現
+     * @return タスクID
+     */
     public static TaskId valueOf(String stringValue) {
         return new TaskId(Long.valueOf(stringValue));
     }
