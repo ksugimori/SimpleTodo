@@ -10,6 +10,11 @@ import java.util.*;
 @Repository
 public class TaskRepositoryImpl implements TaskRepository {
     /**
+     * {@link #sequence} の初期値。
+     */
+    private static final int SEQUENCE_INIT_VALUE = 1;
+
+    /**
      * タスクID採番用の値。
      * RDBMS におけるシーケンスオブジェクトのようなもの。
      */
@@ -21,7 +26,7 @@ public class TaskRepositoryImpl implements TaskRepository {
     private final Map<TaskId, Task> map;
 
     public TaskRepositoryImpl() {
-        this.sequence = 1;
+        this.sequence = SEQUENCE_INIT_VALUE;
         this.map = new HashMap<>();
     }
 
@@ -48,5 +53,11 @@ public class TaskRepositoryImpl implements TaskRepository {
     @Override
     public boolean deleteById(TaskId id) {
         return this.map.remove(id) != null;
+    }
+
+    @Override
+    public void reset() {
+        this.map.clear();
+        this.sequence = SEQUENCE_INIT_VALUE;
     }
 }
