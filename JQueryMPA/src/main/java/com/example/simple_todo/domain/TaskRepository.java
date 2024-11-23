@@ -40,4 +40,9 @@ public interface TaskRepository {
      * @return 削除に成功した場合は true
      */
     boolean deleteById(TaskId id);
+
+    /**
+     * すべてのタスクを削除し、シーケンスを初期値に戻す。
+     */
+    void reset();
 }
