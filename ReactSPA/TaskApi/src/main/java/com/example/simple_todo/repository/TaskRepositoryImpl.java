@@ -3,12 +3,16 @@ package com.example.simple_todo.repository;
 import com.example.simple_todo.domain.Task;
 import com.example.simple_todo.domain.TaskId;
 import com.example.simple_todo.domain.TaskRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
 @Repository
 public class TaskRepositoryImpl implements TaskRepository {
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     /**
      * {@link #sequence} の初期値。
      */
@@ -37,6 +41,7 @@ public class TaskRepositoryImpl implements TaskRepository {
 
     @Override
     public void save(Task task) {
+        logger.info("save task: {}, isCompleted={}", task.id(), task.isCompleted());
         this.map.put(task.id(), task);
     }
 
@@ -52,11 +57,13 @@ public class TaskRepositoryImpl implements TaskRepository {
 
     @Override
     public boolean deleteById(TaskId id) {
+        logger.info("delete task: {}", id);
         return this.map.remove(id) != null;
     }
 
     @Override
     public void reset() {
+        logger.info("reset task repository...");
         this.map.clear();
         this.sequence = SEQUENCE_INIT_VALUE;
     }
