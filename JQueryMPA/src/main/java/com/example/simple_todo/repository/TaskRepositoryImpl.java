@@ -5,14 +5,19 @@ import com.example.simple_todo.domain.TaskId;
 import com.example.simple_todo.domain.TaskRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class TaskRepositoryImpl implements TaskRepository {
+    /**
+     * タスクID採番用の値。
+     * RDBMS におけるシーケンスオブジェクトのようなもの。
+     */
     private long sequence;
+
+    /**
+     * 内部的に値を保持するMap
+     */
     private final Map<TaskId, Task> map;
 
     public TaskRepositoryImpl() {
@@ -36,8 +41,8 @@ public class TaskRepositoryImpl implements TaskRepository {
     }
 
     @Override
-    public Task findById(TaskId id) {
-        return this.map.get(id);
+    public Optional<Task> findById(TaskId id) {
+        return Optional.ofNullable(this.map.get(id));
     }
 
     @Override
