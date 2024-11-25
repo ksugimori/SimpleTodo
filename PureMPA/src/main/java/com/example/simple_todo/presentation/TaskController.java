@@ -3,14 +3,14 @@ package com.example.simple_todo.presentation;
 import com.example.simple_todo.domain.Task;
 import com.example.simple_todo.domain.TaskId;
 import com.example.simple_todo.domain.TaskRepository;
+import com.example.simple_todo.domain.exception.TaskNotFoundException;
 import com.example.simple_todo.presentation.form.TaskCreateForm;
 import com.example.simple_todo.presentation.form.TaskIdForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Comparator;
 import java.util.List;
@@ -50,8 +50,11 @@ public class TaskController {
     public String complete(@ModelAttribute TaskIdForm form, Model model) {
         TaskId id = new TaskId(form.getTaskId());
 
-        Task task = taskRepository.findById(id);
-        taskRepository.save(task.complete());
+        Task task = taskRepository.findById(id)
+                .map(Task::complete)
+                .orElseThrow(() -> new TaskNotFoundException(id));
+
+        taskRepository.save(task);
 
         return "redirect:/tasks";
     }
@@ -65,4 +68,9 @@ public class TaskController {
         return "redirect:/tasks";
     }
 
+    @ExceptionHandler(TaskNotFoundException.class)
+    public String handleTaskNotFound(TaskNotFoundException ex, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("errorMessage", "タスクが存在しません");
+        return "redirect:/tasks";
+    }
 }
