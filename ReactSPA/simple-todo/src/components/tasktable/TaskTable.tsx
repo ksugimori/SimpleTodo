@@ -8,11 +8,11 @@ type Props = {
 }
 
 function TaskTable({ tasks, onComplete, onDelete }: Props) {
-  return <table id="task_table">
+  return <table style={{ width: '100%' }}>
     <thead>
       <tr>
-        <th>ID</th>
-        <th>内容</th>
+        <th style={{ width: '10rem' }}>ID</th>
+        <th style={{ width: '11rem' }}>内容</th>
         <th></th>
       </tr>
     </thead>

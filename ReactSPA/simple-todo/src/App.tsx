@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import './App.css'
 import TaskTable from './components/tasktable/TaskTable'
 import Task, { completeTask } from './types/Task'
 import TaskInputForm from './components/taskInputForm/TaskInputForm'
