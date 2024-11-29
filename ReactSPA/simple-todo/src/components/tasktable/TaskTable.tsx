@@ -12,8 +12,8 @@ function TaskTable({ tasks, onComplete, onDelete }: Props) {
     <thead>
       <tr>
         <th style={{ width: '10rem' }}>ID</th>
-        <th style={{ width: '11rem' }}>内容</th>
-        <th></th>
+        <th>内容</th>
+        <th style={{ width: '11rem' }}></th>
       </tr>
     </thead>
 
