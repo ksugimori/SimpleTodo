@@ -8,22 +8,28 @@ type Props = {
 };
 
 function TaskTableRow({ task, onComplete, onDelete }: Props) {
-  const HoverableTr = styled.tr`
+  const Tr = styled.tr`
     &:hover {
       background-color: #f1f1f1;
     }
   `;
 
-  const buttons = <>
+  const Td = styled.td`
+    &:has(> button) {
+      padding: 0 1rem;
+    }
+  `;
+
+  const buttons = (<>
     <button type='button' onClick={() => onComplete(task)}>完了</button>
     <button type='button' onClick={() => onDelete(task.id)}>削除</button>
-  </>
+  </>);
 
-  return <HoverableTr>
-    <td>{task.id}</td>
-    <td>{task.description}</td>
-    <td>{task.isCompleted ? '完了済み' : buttons}</td>
-  </HoverableTr>
+  return (<Tr>
+    <Td>{task.id}</Td>
+    <Td>{task.description}</Td>
+    <Td>{task.isCompleted ? '完了済み' : buttons}</Td>
+  </Tr>);
 }
 
 export default TaskTableRow;
