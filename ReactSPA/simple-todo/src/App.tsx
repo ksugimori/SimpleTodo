@@ -15,43 +15,49 @@ function App() {
     <main>
       <h1>Simple TODO</h1>
 
-      <h2>新規登録</h2>
-      <TaskInputForm onSubmit={async description => {
-        const createdTask = await taskApiClient.create({
-          description: description,
-          isCompleted: false
-        });
+      <section>
+        <h2>新規登録</h2>
 
-        const result = [...tasks, createdTask];
-        setTasks(result);
-      }} />
+        <TaskInputForm onSubmit={async description => {
+          const createdTask = await taskApiClient.create({
+            description: description,
+            isCompleted: false
+          });
 
-      <h2>一覧</h2>
-      <TaskTable
-        tasks={tasks}
-        onComplete={async task => {
-          const request = completeTask(task)
+          const result = [...tasks, createdTask];
+          setTasks(result);
+        }} />
+      </section>
 
-          try {
-            const updatedTask = await taskApiClient.update(request);
+      <section>
+        <h2>一覧</h2>
 
-            const result = tasks.map(e => (e.id === updatedTask.id ? updatedTask : e))
-            setTasks(result);
-          } catch {
-            alert('更新に失敗しました');
-          }
-        }}
-        onDelete={async id => {
-          try {
-            await taskApiClient.delete(id);
+        <TaskTable
+          tasks={tasks}
+          onComplete={async task => {
+            const request = completeTask(task)
 
-            const result = tasks.filter(task => task.id !== id);
-            setTasks(result);
-          } catch {
-            alert('削除に失敗しました');
-          }
-        }}
-      />
+            try {
+              const updatedTask = await taskApiClient.update(request);
+
+              const result = tasks.map(e => (e.id === updatedTask.id ? updatedTask : e))
+              setTasks(result);
+            } catch {
+              alert('更新に失敗しました');
+            }
+          }}
+          onDelete={async id => {
+            try {
+              await taskApiClient.delete(id);
+
+              const result = tasks.filter(task => task.id !== id);
+              setTasks(result);
+            } catch {
+              alert('削除に失敗しました');
+            }
+          }}
+        />
+      </section>
 
     </main>
   )
