@@ -42,7 +42,7 @@ function completeTask(e) {
 
     $.ajax(`/api/tasks/${task.id}`, {
         type: 'PUT',
-        contentType: 'application/json; charset=utf-8',
+        contentType: 'application/json',
         data: JSON.stringify(task)
     })
     .then(response => findRow(response.id))
@@ -68,7 +68,7 @@ function createTask(e) {
 
     $.ajax('/api/tasks', {
         type: 'POST',
-        contentType: 'application/json; charset=utf-8',
+        contentType: 'application/json',
         data: JSON.stringify(request)
     })
     .then(response => createRow(response))
