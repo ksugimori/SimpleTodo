@@ -1,0 +1,21 @@
+version: "3"
+services:
+  simple-todo-api:
+    build:
+      context: ./TaskApi
+      dockerfile: Dockerfile
+    container_name: simple-todo-api
+    tty: true
+    ports:
+      - "8080:8080"
+  simple-todo-react:
+    build:
+      context: ./simple-todo
+      dockerfile: Dockerfile
+    container_name: simple-todo
+    tty: true
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./simple-todo:/app
+      - /app/node_modules
