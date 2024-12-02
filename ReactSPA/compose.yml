@@ -1,6 +1,7 @@
 version: "3"
 services:
   simple-todo-api:
+    platform: linux/amd64
     build:
       context: ./TaskApi
       dockerfile: Dockerfile
@@ -9,6 +10,7 @@ services:
     ports:
       - "8080:8080"
   simple-todo-react:
+    platform: linux/amd64
     build:
       context: ./simple-todo
       dockerfile: Dockerfile
